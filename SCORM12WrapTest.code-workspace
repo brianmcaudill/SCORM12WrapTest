@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {    "git-autoconfig.configList": [
+		{
+			 "user.email": "brian@sundaycouponinserts.com",
+			 "user.name": "isimplicity"
+		 },
+		 {
+			 "user.email": "brian.m.caudill@gmail.com",
+			 "user.name": "brianmcaudill"
+		 }
+   ]}
+}

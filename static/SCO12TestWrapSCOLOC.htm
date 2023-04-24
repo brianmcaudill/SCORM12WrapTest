@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="generator" content="Claude" />
+<style type="text/css">
+body {
+    background-color: silver; color: black;
+    margin-top: 0px; margin-left: 0px;
+    padding-top: 0px; padding-left: 2px; padding-bottom: 0px;
+    font-size: xx-small;font-family: Verdana, Arial, Helvetica, Sans-Serif;
+}
+.uismall { 
+font-size: xx-small;font-family: Verdana, Arial, Helvetica, Sans-Serif;
+}
+</style>
+
+<script type="text/javascript">
+// Updated and maintained by Brian Caudill 
+// https://www.elearningllc.com/scormwraptest/docs brian.m.caudill@gmail.com
+
+const form = document.forms[0];
+const parentWin = window.parent;
+
+function SetShownLocation(url) {
+  form.URLSCO.value = url;
+}
+
+function loadSCO() {
+  const s = form.URLSCO.value;
+  
+  if (window.parent?.LoadSCO && window.parent.LoadSCO(s)) {
+    window.parent.SetCookie('URLSCO', s);
+  } else {
+    alert('Oops. Try again.');
+  }
+}
+
+
+function unloadSCO() {
+  parentWin?.UnloadSCO();
+}
+
+function init() {
+    if (parentWin?.GetCookie) {
+        const url = parentWin.GetCookie('URLSCO');
+    if (typeof url === 'string' && url.length > 0) {
+      SetShownLocation(url);
+    } else {
+      console.error(`Invalid cookie value: ${url}`);
+      // display an error message to the user
+    }
+  } else {
+    console.error('Missing or invalid parent window object');
+    // display an error message to the user
+  }
+}
+
+
+</script>
+
+<title>Generic Ask page</title>
+</head>
+<body topmargin="0" leftmargin="2" bgcolor="#b0b0b0" onload="init()">
+<form onSubmit="loadSCO()"><small>SCO URL <input type="Text" class="uismall" size="70" name="URLSCO" id="URLSCO" value="" /><input type="SUBMIT" class="uismall" name="Load" value="Load" />
+<!--<input type="file" class="uismall" id="URLSCO" name="URLSCO" size="50" onchange="loadSCO()"/>-->
+ <input type="BUTTON" class="uismall" name="Unload" value="Unload" onclick="unloadSCO()" />
+</small></form>
+</body>
+</html>
+

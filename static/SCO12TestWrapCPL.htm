@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="generator" content="Claude" />
+<style type="text/css">
+body {
+	background-color: silver; color: black;
+	font-size: xx-small;font-family: Verdana, Arial, Helvetica, Sans-Serif;
+	margin-top: 0px; margin-left: 0px;
+	padding-top: 0px; padding-left: 0px; padding-bottom: 0px;
+}
+.uismall { 
+	font-size: xx-small;font-family: Verdana, Arial, Helvetica, Sans-Serif;
+}
+.ui_info_button {
+	color: white; 
+	background-color: blue; 
+	border-color: blue; 
+	font-family: Courier, Verdana, Arial, Helvetica, Sans-Serif;
+	font-weight: bold;
+	font-size:xx-small;
+}
+</style>
+<script type="text/javascript">
+// Updated and maintained by Brian Caudill 
+// https://www.elearningllc.com/scormwraptest/docs brian.m.caudill@gmail.com
+
+// Catcher script for improper API object searches
+var API = {};
+function _LMSInitialize() {
+  window.parent.ErrorFoundAPIInSiblingFrame();
+  return false;
+}
+API.LMSInitialize = _LMSInitialize;
+
+var bAutoLoadURL = ((window.parent) &&(window.parent.zParam_urlSCO != null) && (window.parent.zParam_urlSCO !== ""));
+let s = "";
+
+function init() {
+  if (window.parent && typeof window.parent.GetCookie === "function") {
+    SetMainStageType(window.parent.GetCookie("STAGETYPE"));
+  }
+}
+
+function ClearSuspend() {
+  if (window.parent && typeof window.parent.ClearPersistValues === "function") {
+    window.parent.ClearPersistValues();
+    window.parent.RepairFocus();
+  } else {
+    alert("ClearPersistValues function not available");
+  }
+}
+
+function SetMainStageType(typ) {
+  if (typ !== "frame" && typ !== "popup") typ = "frame";
+  if (bAutoLoadURL) {
+    typ = "frame";
+  } else {
+    let frameChecked = document.forms[0].StageWindowFrame;
+    let popupChecked = document.forms[0].StageWindowPopup;
+    frameChecked.checked = (typ === "frame");
+    popupChecked.checked = !frameChecked.checked;
+  }
+
+  if (window.parent && window.parent !== window && !bAutoLoadURL) {
+    if (typeof window.parent.SetStageType === "function") {
+      window.parent.SetStageType(typ);
+      window.parent.RepairFocus();
+    } else {
+      alert("SetStageType function not available");
+    }
+
+    if (typeof window.parent.SetCookie === "function") {
+      window.parent.SetCookie("STAGETYPE", typ);
+    }
+  }
+}
+
+function ClearWrapLog() {
+  if (window.parent && typeof window.parent.ClearLog === "function") {
+    window.parent.ClearLog();
+  } else {
+    alert("ClearLog function not available");
+  }
+}
+
+function PrintWrapLog() {
+  if (window.parent && typeof window.parent.PrintLog === "function") {
+    window.parent.PrintLog();
+  } else {
+    alert("PrintLog function not available");
+  }
+}
+
+function PopupWrapLog() {
+  if (window.parent && typeof window.parent.PopupLog === "function") {
+    window.parent.PopupLog();
+    // window.parent.RepairFocus()
+  } else {
+    alert("PopupLog function not available");
+  }
+}
+
+function BookMarkLog() {
+  if (window.parent && typeof window.parent.InsertLogMarker === "function") {
+    const bookmarkText = document.forms[0].BookmarkText;
+    const s = bookmarkText ? bookmarkText.value : "";
+    window.parent.InsertLogMarker(s);
+    window.parent.RepairFocus();
+  }
+}
+
+function CheckSCOURL() {
+  let s = "(none)";
+  if (window.parent && window.parent.zParam_urlSCO !== null && window.parent.zParam_urlSCO !== "") {
+    s = window.parent.zParam_urlSCO;
+  }
+  alert(`Value of the parameter "SCO" passed to this test wrapper:\n"${s}"`);
+}
+
+function ReloadURL() {
+  window.parent.LoadSCO();
+}
+
+function AboutMe() {
+  window.parent.AboutMe();
+}
+
+</script>
+
+<title>Control Panel</title>
+</head>
+<body topmargin="0" leftmargin="0" bgcolor="#b0b0b0" onload="init()">
+
+<form onSubmit="JavaScript:BookMarkLog()">
+<table width="100% border=" cellpadding="0" cellspacing="2">
+<tr>
+<td align="center"><small><small>
+<script type="text/javascript">
+	if (bAutoLoadURL) {
+	  const SCOUrlButton = '<input type="BUTTON" class="uismall" name="ShowURL"' +
+		' value="SCO URL" onClick="CheckSCOURL()" />' +
+		'<input type="BUTTON" class="uismall" name="Reload_URL"' +
+		' value="Reload SCO" onClick="ReloadURL()" />';
+	  const checkSCOUrlButton = '<input type="BUTTON" class="uismall" name="ShowURL"' +
+		' value="Check SCO URL" onClick="CheckSCOURL()" />';
+	  if ((window.parent) && (window.parent.zbRerunOK)) {
+		s = SCOUrlButton;
+	  } else {
+		s = checkSCOUrlButton;
+	  }
+	  s += '<br />&nbsp;';
+	} else { 
+	  s = 'Stage window type:<br />' +
+		'<input type="Radio" name="StageWindowFrame" value="Frame"' +
+		' onClick="SetMainStageType(\'frame\')" />&nbsp;Frame' +
+		' <input type="Radio" name="StageWindowPopup" value="Popup"' +
+		' onClick="SetMainStageType(\'popup\')" />&nbsp;Pop up';
+	}	
+	document.write(s);
+</script>
+</small></small>
+</td>
+</tr>
+
+<script type="text/javascript">
+ 
+	const bShowLocalClearButton = !bAutoLoadURL && (!window.parent || window.parent.zobjAPI === null);
+
+	if (bShowLocalClearButton) {
+	  const s = `
+		<tr>
+		  <td align="center">
+			<input type="BUTTON" class="uismall" name="ClearPersistValues" value="Clear persistent data" onClick="JavaScript:ClearSuspend()" />
+		  </td>
+		</tr>
+	  `;
+	  document.write(s);
+	}
+</script>
+
+<tr>
+<td align="center" class="uismall">Log: <input type="BUTTON" class="uismall" name="ClearTheLog_" value="Clear" onClick="JavaScript:ClearWrapLog()" /> 
+
+<input type="BUTTON" class="uismall" name="PopupTheLog" value="Pop up" onClick="JavaScript:PopupWrapLog()" />
+
+<input type="BUTTON" class="ui_info_button" name="AboutThis" value=" i " onClick="JavaScript:AboutMe()" />
+
+<!-- <input type="BUTTON" class="uismall" name="PrintTheLog" value="Print" onClick="JavaScript:PrintWrapLog()" />--></td>
+</tr>
+<tr>
+<td align="center"><small><small>Insert bookmark into log: <input type="text" class="uismall" name="BookmarkText" id="BookmarkText" value="" size="25" /><input type="SUBMIT" class="uismall" name="BookMarkTheLog" value="OK"  /></small></small></td>
+</tr>
+</table>
+</form>
+</body>
+</html>
+
